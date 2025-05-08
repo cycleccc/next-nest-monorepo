@@ -6,13 +6,13 @@ import './src/env.js';
 
 /** @type {import("next").NextConfig} */
 const config = {
-  images: {
-    remotePatterns: [
-      {
-        hostname: 'avatar.vercel.sh',
-      },
-    ],
-  },
+    images: {
+        remotePatterns: [
+            {
+                hostname: 'avatar.vercel.sh',
+            },
+        ],
+    },
 };
 
 export default config;

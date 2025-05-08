@@ -10,79 +10,79 @@ import type { DBMessage } from '@/server/db/schema';
 import type { Attachment, UIMessage } from 'ai';
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const { id } = params;
-  const chat = await getChatById({ id });
+    const params = await props.params;
+    const { id } = params;
+    const chat = await getChatById({ id });
 
-  if (!chat) {
-    notFound();
-  }
-
-  const session = await auth();
-
-  if (!session) {
-    redirect('/api/auth/guest');
-  }
-
-  if (chat.visibility === 'private') {
-    if (!session.user) {
-      return notFound();
+    if (!chat) {
+        notFound();
     }
 
-    if (Number(session.user.id) !== chat.userId) {
-      return notFound();
+    const session = await auth();
+
+    if (!session) {
+        redirect('/api/auth/guest');
     }
-  }
 
-  const messagesFromDb = await getMessagesByChatId({
-    id,
-  });
+    if (chat.visibility === 'private') {
+        if (!session.user) {
+            return notFound();
+        }
 
-  function convertToUIMessages(messages: Array<DBMessage>): Array<UIMessage> {
-    return messages.map((message) => ({
-      id: message.id,
-      parts: message.parts as UIMessage['parts'],
-      role: message.role as UIMessage['role'],
-      // Note: content will soon be deprecated in @ai-sdk/react
-      content: '',
-      createdAt: message.createdAt,
-      experimental_attachments:
-        (message.attachments as Array<Attachment>) ?? [],
-    }));
-  }
+        if (Number(session.user.id) !== chat.userId) {
+            return notFound();
+        }
+    }
 
-  const cookieStore = await cookies();
-  const chatModelFromCookie = cookieStore.get('chat-model');
+    const messagesFromDb = await getMessagesByChatId({
+        id,
+    });
 
-  if (!chatModelFromCookie) {
+    function convertToUIMessages(messages: Array<DBMessage>): Array<UIMessage> {
+        return messages.map((message) => ({
+            id: message.id,
+            parts: message.parts as UIMessage['parts'],
+            role: message.role as UIMessage['role'],
+            // Note: content will soon be deprecated in @ai-sdk/react
+            content: '',
+            createdAt: message.createdAt,
+            experimental_attachments:
+                (message.attachments as Array<Attachment>) ?? [],
+        }));
+    }
+
+    const cookieStore = await cookies();
+    const chatModelFromCookie = cookieStore.get('chat-model');
+
+    if (!chatModelFromCookie) {
+        return (
+            <>
+                <Chat
+                    id={chat.id}
+                    initialMessages={convertToUIMessages(messagesFromDb)}
+                    initialChatModel={DEFAULT_CHAT_MODEL}
+                    initialVisibilityType={chat.visibility}
+                    isReadonly={Number(session?.user?.id) !== chat.userId}
+                    session={session}
+                    autoResume={true}
+                />
+                <DataStreamHandler id={id} />
+            </>
+        );
+    }
+
     return (
-      <>
-        <Chat
-          id={chat.id}
-          initialMessages={convertToUIMessages(messagesFromDb)}
-          initialChatModel={DEFAULT_CHAT_MODEL}
-          initialVisibilityType={chat.visibility}
-          isReadonly={Number(session?.user?.id) !== chat.userId}
-          session={session}
-          autoResume={true}
-        />
-        <DataStreamHandler id={id} />
-      </>
+        <>
+            <Chat
+                id={chat.id}
+                initialMessages={convertToUIMessages(messagesFromDb)}
+                initialChatModel={chatModelFromCookie.value}
+                initialVisibilityType={chat.visibility}
+                isReadonly={Number(session?.user?.id) !== chat.userId}
+                session={session}
+                autoResume={true}
+            />
+            <DataStreamHandler id={id} />
+        </>
     );
-  }
-
-  return (
-    <>
-      <Chat
-        id={chat.id}
-        initialMessages={convertToUIMessages(messagesFromDb)}
-        initialChatModel={chatModelFromCookie.value}
-        initialVisibilityType={chat.visibility}
-        isReadonly={Number(session?.user?.id) !== chat.userId}
-        session={session}
-        autoResume={true}
-      />
-      <DataStreamHandler id={id} />
-    </>
-  );
 }
