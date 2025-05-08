@@ -43,12 +43,10 @@ export function compareMessages(
 }
 
 const textToDeltas = (text: string): LanguageModelV1StreamPart[] => {
-    const deltas = text
-        .split(' ')
-        .map((char) => ({
-            type: 'text-delta' as const,
-            textDelta: `${char} `,
-        }));
+    const deltas = text.split(' ').map((char) => ({
+        type: 'text-delta' as const,
+        textDelta: `${char} `,
+    }));
 
     return deltas;
 };

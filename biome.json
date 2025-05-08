@@ -74,7 +74,8 @@
                 "useDefaultParameterLast": "warn",
                 "useExponentiationOperator": "off",
                 "noUnusedTemplateLiteral": "off",
-                "noUselessElse": "off"
+                "noUselessElse": "off",
+                "useTemplate": "warn"
             },
             "suspicious": {
                 "noExplicitAny": "off"
