@@ -1,36 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import type { UserLoginDtoType } from './user.dto';
-import type { UserLoginResponse } from '@server/user/user.types';
-
+import { Inject, Injectable } from '@nestjs/common';
+import type { DbClient } from '@ws/db';
+import type { UserGetDtoType } from './user.dto';
+import type { User } from '@ws/db/schema';
+import { eq } from 'drizzle-orm';
+import { user } from '@ws/db/schema';
 @Injectable()
 export class UserService {
-    constructor(private readonly prismaService: PrismaService) {}
+    constructor(@Inject('DB') private db: DbClient) {}
 
-    async login(userLoginDto: UserLoginDtoType): Promise<UserLoginResponse> {
-        const user = await this.prismaService.user.findFirst({
-            where: {
-                email: userLoginDto.email,
-                deletedAt: null,
-            },
-            include: {
-                roles: true,
-            },
+    async get({ id }: UserGetDtoType): Promise<User> {
+        const userData = await this.db.query.user.findFirst({
+            where: eq(user.id, id),
         });
-
-        // update user lastLoggedInAt
-        await this.prismaService.user.update({
-            where: {
-                id: user.id,
-            },
-            data: {
-                lastLoggedInAt: new Date(),
-            },
-        });
-
-        // return login response
-        return {
-            jwt,
-            user,
-        };
+        if (!userData) {
+            throw new Error('User not found');
+        }
+        return userData;
     }
 }

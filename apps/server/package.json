@@ -1,5 +1,5 @@
 {
-    "name": "server",
+    "name": "@apps/server",
     "version": "0.0.1",
     "description": "",
     "author": "",
@@ -22,12 +22,15 @@
         "@nestjs/config": "^4.0.2",
         "@nestjs/core": "^10.0.0",
         "@nestjs/platform-express": "^10.0.0",
+        "@trpc/client": "^11.0.0",
         "@ws/db": "workspace:*",
-        "@trpc/server": "^10.33.0",
+        "@ws/transformer": "workspace:*",
         "drizzle-orm": "^0.41.0",
         "postgres": "^3.4.4",
         "reflect-metadata": "^0.2.0",
-        "rxjs": "^7.8.1"
+        "rxjs": "^7.8.1",
+        "superjson": "^2.2.1",
+        "zod": "^3.24.2"
     },
     "devDependencies": {
         "@nestjs/cli": "^10.0.0",

@@ -1,31 +1,3 @@
-import { Injectable } from '@nestjs/common';
-import type { UserService } from '../user/user.service';
-import { initTRPC } from '@trpc/server';
-import type * as trpcExpress from '@trpc/server/adapters/express';
-import type { CreateExpressContextOptions } from '@trpc/server/adapters/express';
-import type { User } from '@ws/db/schema';
-import superJSON from 'superjson';
-import { ZodError } from 'zod';
-export interface TrpcContext extends CreateExpressContextOptions {
-    user?: User;
-}
-
-export const createContext = async (
-    opts: trpcExpress.CreateExpressContextOptions,
-) => {
-    return {
-        req: opts.req,
-        res: opts.res,
-    };
-};
-
-export const createTRPCContext = async (opts: { headers: Headers }) => {
-    return {
-        db,
-        ...opts,
-    };
-};
-
 export const transformer = {
     serialize: (value: any) => {
         // Recursively search for Date objects to convert to strings
@@ -69,30 +41,3 @@ export const transformer = {
         return deserializeDate(value);
     },
 };
-
-@Injectable()
-export class TrpcService {
-    trpc;
-    constructor(private readonly userService: UserService) {
-        this.trpc = initTRPC.context<TrpcContext>().create({
-            transformer: superJSON,
-            errorFormatter({ shape, error }) {
-                return {
-                    ...shape,
-                    data: {
-                        ...shape.data,
-                        zodError:
-                            error.cause instanceof ZodError
-                                ? error.cause.flatten()
-                                : null,
-                    },
-                };
-            },
-        });
-    }
-
-    // these routes are publicly accessible to everyone
-    publicProcedure() {
-        return this.trpc.procedure;
-    }
-}
