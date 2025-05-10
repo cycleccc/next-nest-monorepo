@@ -1,20 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
 import type { DbClient } from '@ws/db';
-import type { UserGetDtoType } from './user.dto';
 import type { User } from '@ws/db/schema';
 import { eq } from 'drizzle-orm';
 import { user } from '@ws/db/schema';
+import { z } from 'zod';
+
+const getUserSchema = z.object({
+    id: z.number(),
+});
+
+type GetUserInput = z.infer<typeof getUserSchema>;
+
 @Injectable()
 export class UserService {
     constructor(@Inject('DB') private db: DbClient) {}
 
-    async get({ id }: UserGetDtoType): Promise<User> {
+    async get(input: GetUserInput): Promise<User | null> {
         const userData = await this.db.query.user.findFirst({
-            where: eq(user.id, id),
+            where: eq(user.id, input.id),
         });
-        if (!userData) {
-            throw new Error('User not found');
-        }
-        return userData;
+        return userData ?? null;
     }
 }

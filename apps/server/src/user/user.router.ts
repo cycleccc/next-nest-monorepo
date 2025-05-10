@@ -1,13 +1,30 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserGetDto } from './user.dto';
+import { Controller } from '@nestjs/common';
+import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
+import type { UserService } from './user.service';
+import { userContract } from './user.contract';
 
-@Controller('user')
+@Controller()
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    @Post('get')
-    async get(@Body() input: UserGetDto) {
-        return this.userService.get(input);
+    @TsRestHandler(userContract.getUser)
+    async getUser() {
+        return tsRestHandler(userContract.getUser, async ({ body }) => {
+            const user = await this.userService.get(body);
+
+            if (!user) {
+                return {
+                    status: 404,
+                    body: {
+                        message: 'User not found',
+                    },
+                };
+            }
+
+            return {
+                status: 200,
+                body: user,
+            };
+        });
     }
 }
