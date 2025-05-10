@@ -24,7 +24,6 @@
         "@nestjs/platform-express": "^10.0.0",
         "@trpc/client": "^11.0.0",
         "@ws/db": "workspace:*",
-        "@ws/transformer": "workspace:*",
         "drizzle-orm": "^0.41.0",
         "postgres": "^3.4.4",
         "reflect-metadata": "^0.2.0",
