@@ -1,11 +1,17 @@
 {
-  "name": "shared",
-  "version": "0.0.1",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc -w"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.3"
-  }
+    "name": "@ws/shared",
+    "version": "0.0.1",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w"
+    },
+    "dependencies": {
+        "@ts-rest/core": "^3.52.1",
+        "zod": "^3.24.4"
+    },
+    "devDependencies": {
+        "typescript": "^5.3.3"
+    }
 }

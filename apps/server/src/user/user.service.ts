@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { DbClient } from '@ws/db';
-import type { User } from '@ws/db/schema';
+import type { User } from '@ws/db';
+import { type DbClient, user } from '@ws/db';
 import { eq } from 'drizzle-orm';
-import { user } from '@ws/db/schema';
 import { z } from 'zod';
 
 const getUserSchema = z.object({

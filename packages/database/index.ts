@@ -9,4 +9,5 @@ export function getDbClient(url: string) {
 }
 export type DbClient = ReturnType<typeof getDbClient>;
 
-export { schema };
+// 导出所有 schema 内容
+export * from './schema';

@@ -58,7 +58,6 @@
                 "noUselessThisAlias": "off"
             },
             "correctness": {
-                "noUnusedImports": "warn",
                 "useArrayLiterals": "warn",
                 "noNewSymbol": "warn",
                 "useJsxKeyInIterable": "off",
@@ -75,7 +74,8 @@
                 "useExponentiationOperator": "off",
                 "noUnusedTemplateLiteral": "off",
                 "noUselessElse": "off",
-                "useTemplate": "warn"
+                "useTemplate": "warn",
+                "useImportType": "off"
             },
             "suspicious": {
                 "noExplicitAny": "off"
@@ -134,7 +134,17 @@
         },
         {
             "include": ["apps/server/**/*"],
-            "ignore": ["dist", "coverage"]
+            "ignore": [
+                "dist",
+                "coverage"
+            ],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "useImportType": "off"
+                    }
+                }
+            }
         }
     ]
 }

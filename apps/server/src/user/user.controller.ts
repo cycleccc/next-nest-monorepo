@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
-import type { UserService } from './user.service';
-import { userContract } from './user.contract';
+import { UserService } from './user.service';
+import { userContract } from '@ws/shared';
 
 @Controller()
 export class UserController {

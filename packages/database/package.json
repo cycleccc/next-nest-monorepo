@@ -3,25 +3,31 @@
     "version": "1.0.0",
     "description": "",
     "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "scripts": {
+        "dev": "tsc -w",
         "build": "tsc -p ./tsconfig.build.json",
-        "generate:dev": "dotenv -e ../../.env.development -- drizzle-kit generate",
-        "generate:test": "dotenv -e ../../.env.test drizzle-kit generate",
-        "generate:prod": "dotenv -e ../../.env.production drizzle-kit migrate",
-        "studio": "dotenv -e ../../.env.development -- drizzle-kit studio",
-        "push:dev": "dotenv -e ../../.env.development -- drizzle-kit push",
+        "generate:dev": "drizzle-kit generate",
+        "generate:test": "drizzle-kit generate",
+        "generate:prod": "drizzle-kit migrate",
+        "studio": "drizzle-kit studio",
+        "push:dev": "drizzle-kit push",
         "push:test": "cross-env NODE_ENV=test drizzle-kit push",
-        "seed:dev": "dotenv -e ../../.env.development -- ts-node ./scripts/seed.ts",
-        "seed:test": "dotenv -e ../../.env.test -- ts-node ./scripts/seed.ts"
+        "seed:dev": "ts-node ./scripts/seed.ts",
+        "seed:test": "ts-node ./scripts/seed.ts",
+        "db:studio": "drizzle-kit studio --port 5555"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
         "drizzle-orm": "^0.41.0",
-        "postgres": "^3.4.4"
+        "postgres": "^3.4.4",
+        "dotenv": "^16.4.5"
     },
     "devDependencies": {
-        "drizzle-kit": "^0.24.2"
+        "drizzle-kit": "^0.30.5",
+        "@types/node": "^20.11.24",
+        "@types/dotenv": "^8.2.0"
     }
 }
