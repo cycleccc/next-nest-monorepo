@@ -1,5 +1,4 @@
-
-（Next.js、NestJS、tRPC、Drizzle、Biome）非常现代化，适合构建全栈应用。在 monorepo 架构下，合理组织这些技术有助于提高开发效率、模块复用性和部署一致性。
+（Next.js、NestJS、ts-rest、Drizzle、Biome）非常现代化，适合构建全栈应用。在 monorepo 架构下，合理组织这些技术有助于提高开发效率、模块复用性和部署一致性。
 
 下面是一个推荐的架构设计方案，结合你提到的每项技术：
 
@@ -22,12 +21,11 @@
 ```
 my-monorepo/
 ├── apps/
-│   ├── web/              # 前端应用 (Next.js + tRPC)
-│   └── server/           # 后端服务 (NestJS + tRPC + Drizzle)
+│   ├── web/              # 前端应用 (Next.js + ts-rest)
+│   └── server/           # 后端服务 (NestJS + ts-rest + Drizzle)
 ├── packages/
 │   ├── config/           # 通用配置（tsconfig、biome、eslint 等）
-│   ├── ui/               # 可复用的前端组件库
-│   ├── trpc/             # 共享的 tRPC 定义（路由、类型）
+│   ├── api/              # ts-rest API 契约定义
 │   └── db/               # Drizzle schema + db client
 ├── .gitignore
 ├── turbo.json
@@ -42,21 +40,21 @@ my-monorepo/
 ### `apps/web` （Next.js）
 
 * 使用 **App Router** + React Server Component（可选）
-* 集成 **tRPC client** 来调用服务端 API（可在 SSR 和客户端使用）
-* 使用 `@my-monorepo/trpc` 中定义的类型安全 API
+* 集成 **ts-rest client** 来调用服务端 API（可在 SSR 和客户端使用）
+* 使用 `@my-monorepo/api` 中定义的 API 契约
 * 使用 `@my-monorepo/ui` 的组件
 
 ### `apps/server` （NestJS）
 
 * 核心 API 服务
-* 使用 `tRPC` 作为其中一种 API 暴露方式（也可以同时支持 REST）
+* 使用 `ts-rest` 作为 API 契约和实现
 * 数据访问用 `Drizzle ORM`（支持 PostgreSQL、SQLite、MySQL 等）
 * 环境变量管理建议统一用 `dotenv` + 校验库（如 `zod`）
 
-### `packages/trpc`
+### `packages/api`
 
-* 存放 tRPC 的 `router`、`context`、`procedure` 等
-* 前后端共享类型定义
+* 存放 ts-rest 的 API 契约定义
+* 前后端共享类型定义和 API 接口规范
 
 ### `packages/db`
 
@@ -76,11 +74,12 @@ my-monorepo/
 
 ## 🛠️ 技术整合注意事项
 
-* **tRPC**：
+* **ts-rest**：
 
-  * 推荐使用 `@trpc/server` 在 NestJS 中构建 API（可以用 `expressMiddleware` 或 `fastifyMiddleware` 挂载）
-  * 在 Next.js 使用 `@trpc/react-query` 提供客户端调用
-  * 类型定义放在 `packages/trpc` 中，实现真正前后端类型一致
+  * 在 `packages/api` 中定义 API 契约
+  * 在 NestJS 中使用 `@ts-rest/nest` 实现 API
+  * 在 Next.js 中使用 `@ts-rest/core` 和 `@ts-rest/react-query` 进行客户端调用
+  * 确保前后端类型一致性
 
 * **Drizzle**：
 

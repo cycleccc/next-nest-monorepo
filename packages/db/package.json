@@ -1,5 +1,5 @@
 {
-    "name": "@ws/db",
+    "name": "@packages/db",
     "version": "1.0.0",
     "description": "",
     "main": "./dist/index.js",

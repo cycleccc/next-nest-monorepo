@@ -1,5 +1,5 @@
 {
-    "name": "web",
+    "name": "@apps/web",
     "version": "0.1.0",
     "private": true,
     "type": "module",
@@ -47,8 +47,8 @@
         "@vercel/blob": "^0.24.1",
         "@vercel/functions": "^2.0.0",
         "@vercel/postgres": "^0.10.0",
-        "@ws/db": "workspace:*",
-        "@ws/shared": "workspace:*",
+        "@packages/db": "workspace:*",
+        "@packages/api": "workspace:*",
         "ai": "4.3.13",
         "bcrypt-ts": "^5.0.2",
         "class-variance-authority": "^0.7.0",
