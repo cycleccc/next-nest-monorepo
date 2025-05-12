@@ -1,6 +1,15 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
+        "baseUrl": ".",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "strictBindCallApply": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
         "module": "commonjs",
         "esModuleInterop": true,
         "declaration": true,

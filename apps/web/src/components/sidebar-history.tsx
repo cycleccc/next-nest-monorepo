@@ -22,7 +22,7 @@ import {
     SidebarMenu,
     useSidebar,
 } from '@/components/ui/sidebar';
-import type { Chat } from '@/server/db/schema';
+import type { Chat } from '@packages/db';
 import { fetcher } from '@/lib/utils';
 import { ChatItem } from './sidebar-history-item';
 import useSWRInfinite from 'swr/infinite';

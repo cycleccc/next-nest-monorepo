@@ -1,4 +1,4 @@
-import type { Document } from '@/server/db/schema';
+import type { Document } from '@packages/db';
 import { generateUUID } from '@/lib/utils';
 import { expect, test } from '../fixtures';
 

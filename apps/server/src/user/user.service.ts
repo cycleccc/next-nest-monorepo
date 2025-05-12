@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 const getUserSchema = z.object({
-    id: z.number(),
+    id: z.string(),
 });
 
 type GetUserInput = z.infer<typeof getUserSchema>;

@@ -1,7 +1,7 @@
 import type { CoreAssistantMessage, CoreToolMessage, UIMessage } from 'ai';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import type { Document } from '@/server/db/schema';
+import type { Document } from '@packages/db';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));

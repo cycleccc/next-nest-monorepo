@@ -27,7 +27,7 @@ import {
     type DBMessage,
     type Chat,
     stream,
-} from '@/server/db/schema';
+} from '@packages/db';
 import type { ArtifactKind } from '@/components/artifact';
 import { generateUUID } from '../utils';
 import { generateHashedPassword } from './utils';
@@ -56,7 +56,7 @@ export async function createUser(email: string, password: string) {
     try {
         return await db
             .insert(user)
-            .values({ email, password: hashedPassword });
+            .values({ id: generateUUID(), email, password: hashedPassword });
     } catch (error) {
         console.error('Failed to create user in database');
         throw error;
@@ -68,10 +68,13 @@ export async function createGuestUser() {
     const password = generateHashedPassword(generateUUID());
 
     try {
-        return await db.insert(user).values({ email, password }).returning({
-            id: user.id,
-            email: user.email,
-        });
+        return await db
+            .insert(user)
+            .values({ id: generateUUID(), email, password })
+            .returning({
+                id: user.id,
+                email: user.email,
+            });
     } catch (error) {
         console.error('Failed to create guest user in database');
         throw error;
@@ -93,7 +96,7 @@ export async function saveChat({
         return await db.insert(chat).values({
             id,
             createdAt: new Date(),
-            userId: Number.parseInt(userId),
+            userId,
             title,
             visibility,
         });
@@ -140,11 +143,8 @@ export async function getChatsByUserId({
                 .from(chat)
                 .where(
                     whereCondition
-                        ? and(
-                              whereCondition,
-                              eq(chat.userId, Number.parseInt(id)),
-                          )
-                        : eq(chat.userId, Number.parseInt(id)),
+                        ? and(whereCondition, eq(chat.userId, id))
+                        : eq(chat.userId, id),
                 )
                 .orderBy(desc(chat.createdAt))
                 .limit(extendedLimit);
@@ -298,7 +298,7 @@ export async function saveDocument({
                 title,
                 kind,
                 content,
-                userId: Number.parseInt(userId),
+                userId,
                 createdAt: new Date(),
             })
             .returning();
@@ -490,7 +490,7 @@ export async function getMessageCountByUserId({
             .innerJoin(chat, eq(message.chatId, chat.id))
             .where(
                 and(
-                    eq(chat.userId, Number.parseInt(id)),
+                    eq(chat.userId, id),
                     gte(message.createdAt, twentyFourHoursAgo),
                     eq(message.role, 'user'),
                 ),

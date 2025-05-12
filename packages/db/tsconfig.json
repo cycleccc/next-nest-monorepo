@@ -1,11 +1,23 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "lib": [
-        "ES2015",
-        "DOM"
+    "compilerOptions": {
+        "baseUrl": ".",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "strictBindCallApply": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "lib": [
+            "ES2015",
+            "DOM"
+        ]
+    },
+    "include": [
+        "./**/*.ts"
     ]
-  },
-  "include": ["./**/*.ts"]
 }

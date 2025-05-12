@@ -1,4 +1,4 @@
-import type { Chat } from '@/server/db/schema';
+import type { Chat } from '@packages/db';
 import {
     SidebarMenuAction,
     SidebarMenuButton,

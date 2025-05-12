@@ -30,7 +30,7 @@ import { postRequestBodySchema, type PostRequestBody } from './schema';
 import { geolocation } from '@vercel/functions';
 import { createResumableStreamContext } from 'resumable-stream';
 import { after } from 'next/server';
-import type { Chat } from '@/server/db/schema';
+import type { Chat } from '@packages/db';
 
 export const maxDuration = 60;
 
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
                 visibility: selectedVisibilityType,
             });
         } else {
-            if (chat?.userId !== Number.parseInt(session.user.id)) {
+            if (chat?.userId !== session.user.id) {
                 return new Response('Forbidden', { status: 403 });
             }
         }
@@ -252,10 +252,7 @@ export async function GET(request: Request) {
         return new Response('Not found', { status: 404 });
     }
 
-    if (
-        chat.visibility === 'private' &&
-        chat.userId !== Number.parseInt(session.user.id)
-    ) {
+    if (chat.visibility === 'private' && chat.userId !== session.user.id) {
         return new Response('Forbidden', { status: 403 });
     }
 
@@ -303,7 +300,7 @@ export async function DELETE(request: Request) {
     try {
         const chat = await getChatById({ id });
 
-        if (chat?.userId !== Number.parseInt(session.user.id)) {
+        if (chat?.userId !== session.user.id) {
             return new Response('Forbidden', { status: 403 });
         }
 

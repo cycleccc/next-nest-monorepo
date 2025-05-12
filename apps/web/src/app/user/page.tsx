@@ -10,7 +10,7 @@ export default function UserPage() {
         try {
             const response = await apiClient.user.getUser({
                 body: {
-                    id: 436,
+                    id: '436',
                 },
             });
 

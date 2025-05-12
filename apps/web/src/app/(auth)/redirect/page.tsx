@@ -37,12 +37,12 @@ export default function RedirectPage() {
                 if (token) {
                     // 检查用户是否存在
                     const existingUser = await utils.user.get.fetch({
-                        id: Number(user_id),
+                        id: user_id,
                     });
 
                     // 如果用户不存在，则创建
                     if (!existingUser) {
-                        await createUser.mutateAsync({ id: Number(user_id) });
+                        await createUser.mutateAsync({ id: user_id });
                     }
 
                     await signIn('custom-redirect', {

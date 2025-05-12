@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const UserSchema = z.object({
-    id: z.number(),
+    id: z.string(),
     email: z.string().email().nullable(),
     password: z.string().nullable(),
 });
@@ -9,7 +9,7 @@ export const UserSchema = z.object({
 export type User = z.infer<typeof UserSchema>;
 
 export const GetUserResponseSchema = z.object({
-    id: z.number(),
+    id: z.string(),
     email: z.string().email().nullable(),
     password: z.string().nullable(),
 });
@@ -19,5 +19,5 @@ export const GetUserErrorSchema = z.object({
 });
 
 export const GetUserRequestSchema = z.object({
-    id: z.number(),
+    id: z.string(),
 }); 

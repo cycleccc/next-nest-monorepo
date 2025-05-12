@@ -7,11 +7,12 @@ import {
     useEffect,
     useMemo,
     useRef,
+    type RefObject,
 } from 'react';
 import type { ArtifactKind, UIArtifact } from './artifact';
 import { FileIcon, FullscreenIcon, ImageIcon, LoaderIcon } from './icons';
 import { cn, fetcher } from '@/lib/utils';
-import type { Document } from '@/server/db/schema';
+import type { Document } from '@packages/db';
 import { InlineDocumentSkeleton } from './document-skeleton';
 import useSWR from 'swr';
 import { Editor } from './text-editor';
@@ -40,7 +41,7 @@ export function DocumentPreview({
     >(result ? `/api/document?id=${result.id}` : null, fetcher);
 
     const previewDocument = useMemo(() => documents?.[0], [documents]);
-    const hitboxRef = useRef<HTMLDivElement>(null);
+    const hitboxRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
 
     useEffect(() => {
         const boundingBox = hitboxRef.current?.getBoundingClientRect();

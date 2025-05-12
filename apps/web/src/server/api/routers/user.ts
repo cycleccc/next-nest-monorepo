@@ -2,13 +2,13 @@ import { z } from 'zod';
 import { eq } from 'drizzle-orm';
 
 import { createTRPCRouter, publicProcedure } from '@/server/api/trpc';
-import { user } from '@/server/db/schema';
+import { user } from '@packages/db';
 
 export const userRouter = createTRPCRouter({
     get: publicProcedure
         .input(
             z.object({
-                id: z.number(),
+                id: z.string(),
             }),
         )
         .query(async ({ ctx, input }) => {
@@ -20,7 +20,7 @@ export const userRouter = createTRPCRouter({
     create: publicProcedure
         .input(
             z.object({
-                id: z.number(),
+                id: z.string(),
             }),
         )
         .mutation(async ({ ctx, input }) => {

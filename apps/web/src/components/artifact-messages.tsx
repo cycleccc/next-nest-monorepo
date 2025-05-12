@@ -1,5 +1,5 @@
 import { PreviewMessage, ThinkingMessage } from './message';
-import type { Vote } from '@/server/db/schema';
+import type { Vote } from '@packages/db';
 import type { UIMessage } from 'ai';
 import { memo } from 'react';
 import equal from 'fast-deep-equal';

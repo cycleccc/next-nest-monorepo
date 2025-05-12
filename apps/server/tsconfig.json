@@ -1,5 +1,4 @@
 {
-    "extends": "../../tsconfig.json", // Extend the config options from the root
     "compilerOptions": {
         "module": "commonjs",
         "declaration": true,
@@ -7,6 +6,9 @@
         "allowSyntheticDefaultImports": true,
         "target": "es2017",
         "sourceMap": true,
-        "outDir": "./dist"
+        "outDir": "./dist",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "skipLibCheck": true
     }
 }

@@ -14,6 +14,7 @@ import {
     useEffect,
     useRef,
     useState,
+    RefObject,
 } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import { nanoid } from 'nanoid';
@@ -327,8 +328,8 @@ const PureToolbar = ({
     setMessages: UseChatHelpers['setMessages'];
     artifactKind: ArtifactKind;
 }) => {
-    const toolbarRef = useRef<HTMLDivElement>(null);
-    const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+    const toolbarRef = useRef<HTMLDivElement>(null) as RefObject<HTMLDivElement>;
+    const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
     const [selectedTool, setSelectedTool] = useState<string | null>(null);
     const [isAnimating, setIsAnimating] = useState(false);
