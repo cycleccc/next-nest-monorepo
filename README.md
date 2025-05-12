@@ -119,6 +119,89 @@ my-monorepo/
 }
 ```
 
+## 📝 开发命令说明
+
+### 安装依赖
+```bash
+# 安装所有依赖
+pnpm install
+
+# 安装特定包的依赖
+pnpm --filter <package-name> install
+```
+
+### 开发命令
+```bash
+# 启动所有项目开发服务
+pnpm dev
+
+# 启动特定项目开发服务
+pnpm --filter <package-name> dev
+
+# 启动 web 应用开发服务
+pnpm --filter web dev
+
+# 启动 server 开发服务
+pnpm --filter server dev
+```
+
+### 构建命令
+```bash
+# 构建所有项目
+pnpm build
+
+# 构建特定项目
+pnpm --filter <package-name> build
+
+# 构建 web 应用
+pnpm --filter web build
+
+# 构建 server
+pnpm --filter server build
+```
+
+### 代码质量
+```bash
+# 运行所有项目的 lint
+pnpm lint
+
+# 运行所有项目的格式化
+pnpm format
+
+# 运行所有项目的测试
+pnpm test
+
+# 运行特定项目的测试
+pnpm --filter <package-name> test
+```
+
+### 包管理
+```bash
+# 添加依赖到特定包
+pnpm --filter <package-name> add <package>
+
+# 添加开发依赖到特定包
+pnpm --filter <package-name> add -D <package>
+
+# 移除特定包的依赖
+pnpm --filter <package-name> remove <package>
+```
+
+### 常用工作流
+```bash
+# 1. 安装依赖
+pnpm install
+
+# 2. 启动开发服务（web + server）
+pnpm dev
+
+# 3. 构建生产版本
+pnpm build
+
+# 4. 运行测试
+pnpm test
+```
+
 ---
 
 ## ✅ 环境变量管理建议
