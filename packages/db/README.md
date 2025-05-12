@@ -76,10 +76,10 @@ pnpm install
 3. 初始化数据库：
 ```bash
 # 生成迁移文件
-pnpm drizzle-kit generate:pg
+pnpm generate:dev
 
 # 执行迁移
-pnpm drizzle-kit push:pg
+pnpm push:dev
 ```
 
 ### 修改数据库字段后
@@ -96,7 +96,7 @@ pnpm drizzle-kit push:pg
 2. 生产环境：
 ```bash
 # 生成新的迁移文件
-pnpm drizzle-kit generate:pg
+pnpm generate:prod
 
 # 检查生成的迁移文件
 # 文件位于 drizzle/migrations 目录下
