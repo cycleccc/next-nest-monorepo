@@ -16,21 +16,26 @@
 
 ---
 
-## 📁 推荐目录结构（pnpm workspace + turbo）
+## 📁 项目结构
 
 ```
 my-monorepo/
-├── apps/
-│   ├── web/              # 前端应用 (Next.js + ts-rest)
-│   └── server/           # 后端服务 (NestJS + ts-rest + Drizzle)
-├── packages/
-│   ├── config/           # 通用配置（tsconfig、biome、eslint 等）
-│   ├── api/              # ts-rest API 契约定义
+├── apps/                    # 应用目录
+│   ├── web/                # 前端应用 (Next.js + ts-rest)
+│   └── server/             # 后端服务 (NestJS + ts-rest + Drizzle)
+├── packages/               # 共享包目录
+│   ├── contracts/         # ts-rest 契约定义
 │   └── db/               # Drizzle schema + db client
-├── .gitignore
-├── turbo.json
-├── pnpm-workspace.yaml
-└── README.md
+├── .vscode/              # VS Code 配置
+├── .turbo/               # Turborepo 缓存
+├── node_modules/         # 依赖目录
+├── .gitignore           # Git 忽略配置
+├── biome.json           # Biome 配置
+├── package.json         # 项目配置
+├── pnpm-lock.yaml       # pnpm 锁文件
+├── pnpm-workspace.yaml  # pnpm 工作空间配置
+├── tsconfig.json        # TypeScript 配置
+└── turbo.json           # Turborepo 配置
 ```
 
 ---
@@ -41,7 +46,7 @@ my-monorepo/
 
 * 使用 **App Router** + React Server Component（可选）
 * 集成 **ts-rest client** 来调用服务端 API（可在 SSR 和客户端使用）
-* 使用 `@my-monorepo/api` 中定义的 API 契约
+* 使用 `@my-monorepo/contracts` 中定义的契约
 * 使用 `@my-monorepo/ui` 的组件
 
 ### `apps/server` （NestJS）
@@ -51,7 +56,7 @@ my-monorepo/
 * 数据访问用 `Drizzle ORM`（支持 PostgreSQL、SQLite、MySQL 等）
 * 环境变量管理建议统一用 `dotenv` + 校验库（如 `zod`）
 
-### `packages/api`
+### `packages/contracts`
 
 * 存放 ts-rest 的 API 契约定义
 * 前后端共享类型定义和 API 接口规范
@@ -209,5 +214,6 @@ pnpm test
 * 每个 `apps` 下放 `.env.local`
 * 用 `env-schema` + `zod`（或 `@nestjs/config` 自带的 validation）进行校验
 * 可以定义统一的环境变量类型定义在 `packages/config/env.ts`
+
 
 ---
