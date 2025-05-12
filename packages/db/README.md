@@ -75,10 +75,7 @@ pnpm install
 
 3. 初始化数据库：
 ```bash
-# 生成迁移文件
-pnpm generate:dev
-
-# 执行迁移
+# 同步 schema 到数据库
 pnpm push:dev
 ```
 
@@ -87,28 +84,22 @@ pnpm push:dev
 1. 本地开发环境：
 ```bash
 # 生成新的迁移文件
-pnpm drizzle-kit generate:pg
+pnpm generate:dev
 
 # 应用迁移到本地数据库
-pnpm drizzle-kit push:pg
+pnpm push:dev
 ```
 
 2. 生产环境：
 ```bash
-# 生成新的迁移文件
+# 执行迁移测试环境积累的 SQL
 pnpm generate:prod
-
-# 检查生成的迁移文件
-# 文件位于 drizzle/migrations 目录下
-
-# 执行迁移（需要确保数据库备份）
-pnpm drizzle-kit push:pg
 ```
 
 ### 本地和线上环境区别
 
 1. 本地开发环境：
-- 使用 `push:pg` 命令直接修改数据库结构
+- 使用 `push` 命令直接修改数据库结构
 - 可以频繁修改和测试
 - 建议使用本地数据库实例
 
