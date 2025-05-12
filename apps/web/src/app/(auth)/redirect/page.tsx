@@ -42,7 +42,9 @@ export default function RedirectPage() {
 
                     // 如果用户不存在，则创建
                     if (!existingUser) {
-                        await createUser.mutateAsync({ id: user_id.toString() });
+                        await createUser.mutateAsync({
+                            id: user_id.toString(),
+                        });
                     }
 
                     await signIn('custom-redirect', {
