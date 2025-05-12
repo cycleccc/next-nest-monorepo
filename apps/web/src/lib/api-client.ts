@@ -1,5 +1,5 @@
 import { initClient, initContract } from '@ts-rest/core';
-import { userContract } from '@packages/api';
+import { userContract } from '@packages/contracts';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
